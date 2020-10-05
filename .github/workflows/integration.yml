@@ -8,7 +8,9 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    types: 
+    - opened
+    - synchronize
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,3 +25,27 @@ jobs:
         run: npm install
       - name : testing
         run: npm run test
+
+  deployPRDraft:
+    name: Deploy draft to Netlify
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.ref != 'refs/heads/master'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      # ... your other build steps to produce a build directory
+      - name : build app
+        run : yarn build
+      # e.g. `yarn build` for create-react-app
+
+      - name: Deploy draft to Netlify
+        uses: South-Paw/action-netlify-deploy@v1.0.4
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
+          build-dir: './build'
+          draft: true
+          comment-on-pull-request: true
+

@@ -35,6 +35,8 @@ jobs:
         uses: actions/checkout@v1
 
       # ... your other build steps to produce a build directory
+      - name: install dependencies
+        run: npm install
       - name : build app
         run : npm run build
       # e.g. `yarn build` for create-react-app

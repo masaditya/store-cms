@@ -36,7 +36,7 @@ jobs:
 
       # ... your other build steps to produce a build directory
       - name : build app
-        run : yarn build
+        run : npm run build
       # e.g. `yarn build` for create-react-app
 
       - name: Deploy draft to Netlify

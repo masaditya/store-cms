@@ -2,10 +2,22 @@ import React from 'react';
 import './App.css';
 
 function App() {
+   
+  const addItem = (e)=> {
+    console.log(e)
+  }
+  
   return (
     <div className="App">
-      <h1>Hello There!</h1>
-      <h2>Sungguh terlalu</h2>
+      <div className="todoListMain">
+        <div className="header">
+          <form onSubmit={this.addItem}>
+            <input placeholder="enter task">
+            </input>
+            <button type="submit">add</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
